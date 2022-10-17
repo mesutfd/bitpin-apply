@@ -1,0 +1,8 @@
+.checked {
+  color: #00aeff;
+}
+
+.my-btn-rating {
+  background-color: inherit !important;
+  border: 0 !important;
+}
