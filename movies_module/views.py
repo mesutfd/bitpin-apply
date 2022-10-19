@@ -12,7 +12,7 @@ class MoviesListView(ListView):
     model = Movies
     context_object_name = 'movies'
     ordering = ['-id']
-    paginate_by = 6
+    paginate_by = 1
 
 
 def rate_movie(request: HttpRequest):
