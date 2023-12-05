@@ -163,7 +163,7 @@
                                                                 <td><a href="#">{{ movie.id }}</a>
                                                                 </td>
                                                                 <td>{{ movie.title }}</td>
-                                                                <td dir="rtl">{{ movie.category }}</td>
+                                                                <td dir="rtl">{{ movie.category.representor }}</td>
                                                                 <td>{{ movie.user.mobile }}</td>
                                                                 <td>
                                                                     {{ movie.director }}</td>
@@ -178,19 +178,19 @@
                                                                           id="{{ movie.id }}">
                                                                         {% csrf_token %}
                                                                         <button type="submit"
-                                                                                class="fa fa-star my-btn-rating"
+                                                                                class="fa fa-star my-btn-rating {% if all_ratings.movie.id >= 1 %}checked{% endif %}"
                                                                                 id="first"></button>
                                                                         <button type="submit"
-                                                                                class="fa fa-star my-btn-rating"
+                                                                                class="fa fa-star my-btn-rating{% if all_ratings.movie.id >= 2 %}checked{% endif %}"
                                                                                 id="second"></button>
                                                                         <button type="submit"
-                                                                                class="fa fa-star my-btn-rating"
+                                                                                class="fa fa-star my-btn-rating{% if all_ratings.movie.id >= 3 %}checked{% endif %}"
                                                                                 id="third"></button>
                                                                         <button type="submit"
-                                                                                class="fa fa-star my-btn-rating"
+                                                                                class="fa fa-star my-btn-rating{% if all_ratings.movie.id >= 4 %}checked{% endif %}"
                                                                                 id="fourth"></button>
                                                                         <button type="submit"
-                                                                                class="fa fa-star my-btn-rating"
+                                                                                class="fa fa-star my-btn-rating{% if all_ratings.movie.id == 5 %}checked{% endif %}"
                                                                                 id="fifth"></button>
                                                                     </form>
                                                                 </td>

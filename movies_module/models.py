@@ -1,5 +1,7 @@
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
+from django.db.models import Avg
+
 from accounts_module.models import User
 
 # Create your models here.
@@ -9,11 +11,16 @@ from django.urls import reverse
 class MoviesCategory(models.Model):
     title = models.CharField(max_length=300, db_index=True, verbose_name='عنوان')
     url_title = models.CharField(max_length=300, db_index=True, verbose_name='عنوان در url')
+    popularity = models.IntegerField(default=98, verbose_name='محبوبیت')
     is_active = models.BooleanField(default=True, verbose_name='فعال / غیرفعال')
     is_delete = models.BooleanField(verbose_name='حذف شده / نشده')
 
     def __str__(self):
-        return f'( {self.title} - {self.url_title} )'
+        return f'( {self.title} - %{self.popularity} )'
+
+    def representor(self):
+        return f'( {self.title} - %{self.popularity} )'
+
 
     class Meta:
         verbose_name = 'دسته بندی'
@@ -32,10 +39,7 @@ rating_choices = (
 class Movies(models.Model):
     title = models.CharField(max_length=300, verbose_name='نام فیلم')
     director = models.CharField(max_length=300, verbose_name="کارگردان")
-    category = models.ManyToManyField(
-        MoviesCategory,
-        related_name='product_categories',
-        verbose_name='دسته بندی ها')
+    category = models.ManyToManyField(MoviesCategory, verbose_name='دسته بندی ها')
     image = models.ImageField(upload_to='images/products', null=True, blank=True, verbose_name='بنر')
     short_description = models.CharField(max_length=360, db_index=True, null=True, verbose_name='خلاصه داستان')
     description = models.TextField(verbose_name='توضیحات', db_index=True)
@@ -70,4 +74,5 @@ class Rating(models.Model):
         return str(self.pk)
 
     def average_rating(self):
-        return
+        avg_score = Rating.objects.filter(movie=self.movie).aggregate(Avg('score'))['score__avg']
+        return avg_score if avg_score is not None else 0

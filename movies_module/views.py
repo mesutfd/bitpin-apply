@@ -2,7 +2,7 @@ from django.http import HttpRequest, HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
 
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 from movies_module.models import Movies, Rating
 
 
@@ -14,6 +14,34 @@ class MoviesListView(ListView):
     ordering = ['-id']
     paginate_by = 1
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        movies = Movies.objects.all()
+        rates = Rating.objects.all()
+        movie_rates = {}
+        for rate in rates:
+            for movie in movies:
+                if movie.id == rate.movie_id:
+                    movie_rates[str(movie.id)] = rate
+        context['all_ratings'] = movie_rates
+
+        return context
+
+
+class MovieDetailView(DetailView):
+    model = Movies
+    template_name = 'movies_module/index.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        # Get the movie object
+        movie = self.get_object()
+
+        # Calculate and add the average rating to the context
+        context['average_rating'] = movie.average_rating()
+
+        return context
 
 def rate_movie(request: HttpRequest):
     if request.user.is_authenticated:
@@ -22,10 +50,17 @@ def rate_movie(request: HttpRequest):
             print(el_id)
             val = request.POST.get('val')
             print(val)
-            obj = Rating.objects.filter(movie_id=el_id).first()
-            obj.score = val
-            obj.user = request.user
-            obj.save()
+            new_rate, is_created_now = Rating.objects.get_or_create(movie_id=el_id, user_id=request.user.id)
+            if is_created_now:
+                new_rate.score = val
+                new_rate.save()
+
+            else:
+                obj = Rating.objects.filter(movie_id=el_id, user_id=request.user.id).first()
+                new_rate.score = val
+                new_rate.user = request.user
+                new_rate.save()
+
             return JsonResponse({
                 'success': 'true',
                 'score': val,
