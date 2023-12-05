@@ -1,11 +1,11 @@
-from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
+from django.db import models
 from django.db.models import Avg
 
 from accounts_module.models import User
 
+
 # Create your models here.
-from django.urls import reverse
 
 
 class MoviesCategory(models.Model):
@@ -20,7 +20,6 @@ class MoviesCategory(models.Model):
 
     def representor(self):
         return f'( {self.title} - %{self.popularity} )'
-
 
     class Meta:
         verbose_name = 'دسته بندی'
@@ -69,6 +68,10 @@ class Rating(models.Model):
     )
     movie = models.ForeignKey(Movies, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="کاربر")
+
+    class Meta:
+        verbose_name = 'امتیاز'
+        verbose_name_plural = 'امتیازات'
 
     def __str__(self):
         return str(self.pk)
