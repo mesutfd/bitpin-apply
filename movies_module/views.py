@@ -1,8 +1,8 @@
-from django.http import HttpRequest, HttpResponse, JsonResponse
-from django.shortcuts import render, redirect
+from django.http import HttpRequest, JsonResponse
+from django.shortcuts import redirect
 from django.urls import reverse
-
 from django.views.generic import ListView, DetailView
+
 from movies_module.models import Movies, Rating
 
 
@@ -42,6 +42,7 @@ class MovieDetailView(DetailView):
         context['average_rating'] = movie.average_rating()
 
         return context
+
 
 def rate_movie(request: HttpRequest):
     if request.user.is_authenticated:
