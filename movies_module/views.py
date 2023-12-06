@@ -14,32 +14,32 @@ class MoviesListView(ListView):
     ordering = ['-id']
     paginate_by = 1
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        movies = Movies.objects.all()
-        rates = Rating.objects.all()
-        movie_rates = {}
-        for rate in rates:
-            for movie in movies:
-                if movie.id == rate.movie_id:
-                    movie_rates[str(movie.id)] = rate
-        context['all_ratings'] = movie_rates
-
-        return context
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     movies = Movies.objects.all()
+    #     rates = Rating.objects.all()
+    #     movie_rates = {}
+    #     for rate in rates:
+    #         for movie in movies:
+    #             if movie.id == rate.movie_id:
+    #                 movie_rates[str(movie.id)] = rate
+    #     context['all_ratings'] = movie_rates
+    #
+    #     return context
 
 
 class MovieDetailView(DetailView):
     model = Movies
-    template_name = 'movies_module/index.html'
+    template_name = 'movies_module/movie_detail.html'
+    context_object_name = 'movie'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        current_movie = self.object
 
-        # Get the movie object
-        movie = self.get_object()
+        current_rate = Rating.objects.filter(movie_id=current_movie.id).first().score
 
-        # Calculate and add the average rating to the context
-        context['average_rating'] = movie.average_rating()
+        context['current_rate'] = current_rate
 
         return context
 

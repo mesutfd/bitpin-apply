@@ -2,7 +2,7 @@
 
 
 {% block content %}
-    <!-- Content Wrapper. Contains page content -->
+   <!-- Content Wrapper. Contains page content -->
 
     <div class="content-wrapper" style="min-height: 692px;">
         <!-- Content Header (Page header) -->
@@ -112,22 +112,9 @@
                         <!-- /.card -->
                     </div>
                     <!-- /.col -->
-                    <div class="col-md-9">
-                        <div class="card">
-                            <div class="card-header p-2">
-                                <ul class="nav nav-pills">
-                                    <li class="nav-item"><a class="nav-link active" href="#activity" data-toggle="tab">سوابق
-                                        درخواست تعمیرات</a>
-                                    </li>
-                                    <li class="nav-item"><a class="nav-link"
-                                                            href="{% comment %}{% url 'car-deliver-form-page' %}{% endcomment %}">+
-                                        درخواست
-                                        جدید</a>
-                                    </li>
-                                </ul>
-                            </div><!-- /.card-header -->
-                            <div class="card-body">
-                                <div class="tab-content">
+                    <div class="row">
+          <!-- Left col -->
+              <div class="tab-content">
                                     <div class="active tab-pane" id="activity">
                                         <div class="card">
                                             <div class="card-header border-transparent">
@@ -143,7 +130,6 @@
                                                 </div>
                                             </div>
                                             <!-- /.card-header -->
-                                            <div class="card-body p-0">
                                                 <div class="table-responsive">
                                                     <table class="table m-0">
                                                         <thead>
@@ -158,7 +144,7 @@
                                                         </tr>
                                                         </thead>
                                                         <tbody>
-                                                        {% for movie in movies %}
+
                                                             <tr>
                                                                 <td><a href="#">{{ movie.id }}</a>
                                                                 </td>
@@ -178,32 +164,30 @@
                                                                           id="{{ movie.id }}">
                                                                         {% csrf_token %}
                                                                         <button type="submit"
-                                                                                class="fa fa-star my-btn-rating {% if all_ratings.movie.id >= 1 %}checked{% endif %}"
+                                                                                class="fa fa-star my-btn-rating {% if current_rate >= 1 %}checked{% endif %} "
                                                                                 id="first"></button>
                                                                         <button type="submit"
-                                                                                class="fa fa-star my-btn-rating{% if all_ratings.movie.id >= 2 %}checked{% endif %}"
+                                                                                class="fa fa-star my-btn-rating {% if current_rate >= 2 %}checked{% endif %}"
                                                                                 id="second"></button>
                                                                         <button type="submit"
-                                                                                class="fa fa-star my-btn-rating{% if all_ratings.movie.id >= 3 %}checked{% endif %}"
+                                                                                class="fa fa-star my-btn-rating {% if current_rate >= 3 %}checked{% endif %}"
                                                                                 id="third"></button>
                                                                         <button type="submit"
-                                                                                class="fa fa-star my-btn-rating{% if all_ratings.movie.id >= 4 %}checked{% endif %}"
+                                                                                class="fa fa-star my-btn-rating {% if current_rate >= 4 %}checked{% endif %}"
                                                                                 id="fourth"></button>
                                                                         <button type="submit"
-                                                                                class="fa fa-star my-btn-rating{% if all_ratings.movie.id == 5 %}checked{% endif %}"
+                                                                                class="fa fa-star my-btn-rating {% if current_rate == 5 %}checked{% endif %}"
                                                                                 id="fifth"></button>
                                                                     </form>
                                                                 </td>
 
                                                             </tr>
-                                                        {% endfor %}
 
 
                                                         </tbody>
                                                     </table>
                                                 </div>
                                                 <!-- /.table-responsive -->
-                                            </div>
                                             <!-- /.card-body -->
                                             <div class="card-footer clearfix">
                                                 {% comment %}<a href="javascript:void(0)" class="btn btn-sm btn-info float-left">سفارش جدید</a>
@@ -379,10 +363,6 @@
                                     </div>
                                     <!-- /.tab-pane -->
                                 </div>
-                                <!-- /.tab-content -->
-                            </div><!-- /.card-body -->
-                        </div>
-                        <!-- /.nav-tabs-custom -->
                     </div>
                     <!-- /.col -->
                 </div>

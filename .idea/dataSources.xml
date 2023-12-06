@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="db.sqlite3" uuid="316214a9-e2bf-4ce1-ade7-96a9a29830ee">
+    <data-source source="LOCAL" name="db.sqlite3 [2]" uuid="cff3e0c1-cd06-435f-8847-e1833416e8e2">
       <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
       <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/db.sqlite3</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
-    <data-source source="LOCAL" name="db.sqlite3 [2]" uuid="cff3e0c1-cd06-435f-8847-e1833416e8e2">
-      <driver-ref>sqlite.xerial</driver-ref>
+    <data-source source="LOCAL" name="@localhost" uuid="f45fb183-772d-419c-9af1-ae4b242a8561">
+      <driver-ref>documentdb</driver-ref>
       <synchronize>true</synchronize>
-      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
-      <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/db.sqlite3</jdbc-url>
+      <jdbc-driver>com.dbschema.MongoJdbcDriver</jdbc-driver>
+      <jdbc-url>mongodb://localhost:27017/</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>
